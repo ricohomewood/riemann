@@ -1,11 +1,32 @@
-version: '2'
+version: '3'
 
 services:
   riemann:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: rhomewood/riemann
+    #build:
+      #context: .
+      #dockerfile: Dockerfile
+    networks:
+      - monitoring
     ports:
-      - '5555/tcp'
-      - '5555/udp'
-      - '5556'
+      - '5555:5555/tcp'
+      - '5555:5555/udp'
+      - '5556:5556'
+    volumes:
+      - ./data/etc:/app/etc
+  
+  graphite:
+    image: sitespeedio/graphite
+    networks:
+      monitoring:
+        aliases:
+          - database
+    ports:
+      - "8080:80"
+      - "2003:2003"
+    volumes:
+      - ./graphite/data/htpass/.htpasswd:/etc/nginx/.htpasswd
+      - ./graphite/data/whisper:/opt/graphite/storage/whisper
+
+networks:
+  monitoring:
