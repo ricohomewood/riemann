@@ -13,7 +13,7 @@ services:
       - '5555:5555/udp'
       - '5556:5556'
     volumes:
-      - ./data/etc:/app/etc
+      - ./riemann/data/etc:/app/etc
   
   graphite:
     image: sitespeedio/graphite
@@ -27,6 +27,17 @@ services:
     volumes:
       - ./graphite/data/htpass/.htpasswd:/etc/nginx/.htpasswd
       - ./graphite/data/whisper:/opt/graphite/storage/whisper
+
+  grafana:
+    image: grafana/grafana:4.4.1
+    networks:
+      monitoring:
+        aliases:
+          - display
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/data:/var/lib/grafana
 
 networks:
   monitoring:

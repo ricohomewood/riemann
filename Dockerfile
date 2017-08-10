@@ -10,7 +10,6 @@ RUN (wget -O - http://www.magicermine.com/demos/curl/curl/curl-${CURL_VERSION}.e
     && mv /curl-${CURL_VERSION}.ermine/curl.ermine /bin/curl \
     && rm -rf /curl-${CURL_VERSION}.ermine
 
-
 ## install Riemann and define ENV for overide in docker run
 ENV RIEMANN_VERSION 0.2.14
 RUN curl -skL https://github.com/riemann/riemann/releases/download/${RIEMANN_VERSION}/riemann-${RIEMANN_VERSION}.tar.bz2 | bzip2 -d | tar -x && \
