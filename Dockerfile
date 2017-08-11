@@ -1,6 +1,6 @@
 FROM openjdk:jre-slim
 
-MAINTAINER Richard Homewood
+LABEL maintainer="Richard Homewood"
 
 RUN apt-get update \
     && apt-get install ruby-build ruby ruby-dev wget -y
@@ -16,6 +16,8 @@ RUN curl -skL https://github.com/riemann/riemann/releases/download/${RIEMANN_VER
     mv /riemann-${RIEMANN_VERSION} /app
 
 RUN apt-get remove ruby-build ruby-dev wget -y \
+    && apt autoremove -y \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists
 
 WORKDIR /app
