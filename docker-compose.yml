@@ -27,9 +27,13 @@ services:
     volumes:
       - ./graphite/data/htpass/.htpasswd:/etc/nginx/.htpasswd
       - ./graphite/data/whisper:/opt/graphite/storage/whisper
+      - ./graphite/data/logrotate.d:/etc/logrotate.d
+      - ./graphite/data/log:/var/log
 
   grafana:
-    image: grafana/grafana:4.4.1
+    image: monitoringartist/grafana-xxl
+    environment:
+      GRAFANA_VERSION: "4.4.1"
     networks:
       monitoring:
         aliases:
@@ -37,7 +41,13 @@ services:
     ports:
       - "3000:3000"
     volumes:
+      - grafana-plugins:/grafana-plugins
       - ./grafana/data:/var/lib/grafana
+      - ./grafana/logs:/var/log/grafana
+      - ./grafana/config:/etc/grafana
 
 networks:
   monitoring:
+
+volumes:
+  grafana-plugins:
