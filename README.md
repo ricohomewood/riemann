@@ -8,6 +8,6 @@ Riemann
 Graphite
 Grafana
 
-feel free to plat with that.
+feel free to play with that.
 
 Have fun.
